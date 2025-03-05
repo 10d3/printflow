@@ -6,6 +6,11 @@ export interface ApliiqConfig {
   sharedSecret: string;
   endpoint?: string;
   timeout?: number;
+  cache?: {
+    max?: number;
+    ttl?: number;
+    enabled?: boolean;
+  };
 }
 
 // Product API Types =========================================
