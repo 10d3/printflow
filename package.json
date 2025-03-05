@@ -1,11 +1,13 @@
 {
-  "name": "printflow",
+  "name": "@10d3/printflow",
   "module": "src/index.ts",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "private": false,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "prepublish": "npm run build",
@@ -37,5 +39,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/10d3/printflow.git"
+  },
+  "version": "1.0.0",
+  "publishConfig": {
+    "access": "public"
   }
 }
