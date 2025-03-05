@@ -85,6 +85,96 @@ try {
 }
 ```
 
+## Caching
+
+The client includes built-in LRU caching support for product data:
+
+```typescript
+const client = new ApliiqClient({
+  appId: 'your-app-id',
+  sharedSecret: 'your-shared-secret',
+  cache: {
+    enabled: true,    // Enable caching
+    max: 1000,        // Maximum number of items (default: 1000)
+    ttl: 300000      // Time-to-live in ms (default: 5 minutes)
+  }
+});
+
+// Get cache statistics
+const stats = client.getCacheStats(); // Returns: { size: number }
+
+// Clear cache
+client.clearCache();
+```
+
+
+## TypeScript Types
+
+The client provides built-in type definitions for all API operations:
+
+```typescript
+import { 
+  ApliiqConfig,
+  Product,
+  ApliiqOrder,
+  ApliiqOrderResponse
+} from 'apliiq-client';
+
+// Configuration type
+const config: ApliiqConfig = {
+  appId: 'your-app-id',
+  sharedSecret: 'your-shared-secret',
+  cache: {
+    enabled: true,
+    max: 1000,
+    ttl: 300000
+  }
+};
+
+// Product type
+const product: Product = await client.getProduct(162);
+// {
+//   Id: number;
+//   Name: string;
+//   SKU: string;
+//   Colors: Array<{ Id: number; Name: string }>;
+//   Sizes: Array<{ Id: number; Name: string; Weight: string; PlusSize_Fee: number }>;
+//   // ... other properties
+// }
+
+// Order type
+const order: ApliiqOrder = {
+  number: 1006,
+  name: "#1006",
+  order_number: 1006,
+  line_items: [{
+    id: "1511138222",
+    title: "cotton heritage polly pocket",
+    quantity: 1,
+    price: "45.50",
+    sku: "APQ-1998244S7A1"
+  }],
+  shipping_address: {
+    first_name: "john",
+    last_name: "smith",
+    address1: "1692 Avenue du Mont-Royal Est",
+    city: "los angeles",
+    zip: "90013",
+    province: "California",
+    country: "United States",
+    country_code: "US",
+    province_code: "CA"
+  }
+};
+
+// Order response type
+const response: ApliiqOrderResponse = await client.createOrder(order);
+// { id: number }
+```
+
+All types include full TypeScript intellisense support and runtime validation through Zod schemas.
+
+
 ## Error Handling
 
 ```typescript
