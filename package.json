@@ -36,6 +36,6 @@
   "description": "",
   "repository": {
     "type": "git",
-    "url": "https://github.com/10d3/printflow"
+    "url": "git+https://github.com/10d3/printflow.git"
   }
 }
