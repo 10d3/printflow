@@ -23,13 +23,13 @@ npm install apliiq-client
 ## Configuration
 
 ```typescript
-import { ApliiqClient } from 'apliiq-client';
+import { ApliiqClient } from "apliiq-client";
 
 const client = new ApliiqClient({
-  appId: 'your-app-id',
-  sharedSecret: 'your-shared-secret',
-  endpoint: 'https://api.apliiq.com/v1', // Optional
-  timeout: 15000 // Optional
+  appId: "your-app-id",
+  sharedSecret: "your-shared-secret",
+  endpoint: "https://api.apliiq.com/v1", // Optional
+  timeout: 15000, // Optional
 });
 ```
 
@@ -38,33 +38,38 @@ const client = new ApliiqClient({
 ### Product API
 
 #### Get All Products
+
 ```typescript
 const products = await client.getProducts();
-console.log('Available products:', products);
+console.log("Available products:", products);
 ```
 
 #### Get Single Product
+
 ```typescript
 const product = await client.getProduct(162);
-console.log('Product details:', product);
+console.log("Product details:", product);
 ```
 
 ### Order API
 
 #### Create Order
+
 ```typescript
 try {
   const orderResponse = await client.createOrder({
     number: 1006,
     name: "#1006",
     order_number: 1006,
-    line_items: [{
-      id: "1511138222",
-      title: "cotton heritage polly pocket",
-      quantity: 1,
-      price: "45.50",
-      sku: "APQ-1998244S7A1"
-    }],
+    line_items: [
+      {
+        id: "1511138222",
+        title: "cotton heritage polly pocket",
+        quantity: 1,
+        price: "45.50",
+        sku: "APQ-1998244S7A1",
+      },
+    ],
     shipping_address: {
       first_name: "john",
       last_name: "smith",
@@ -74,10 +79,10 @@ try {
       province: "California",
       country: "United States",
       country_code: "US",
-      province_code: "CA"
-    }
+      province_code: "CA",
+    },
   });
-  console.log('Order created:', orderResponse.id);
+  console.log("Order created:", orderResponse.id);
 } catch (error) {
   if (error instanceof ApliiqError) {
     console.error(`Order failed: ${error.message}`);
@@ -91,13 +96,13 @@ The client includes built-in LRU caching support for product data:
 
 ```typescript
 const client = new ApliiqClient({
-  appId: 'your-app-id',
-  sharedSecret: 'your-shared-secret',
+  appId: "your-app-id",
+  sharedSecret: "your-shared-secret",
   cache: {
-    enabled: true,    // Enable caching
-    max: 1000,        // Maximum number of items (default: 1000)
-    ttl: 300000      // Time-to-live in ms (default: 5 minutes)
-  }
+    enabled: true, // Enable caching
+    max: 1000, // Maximum number of items (default: 1000)
+    ttl: 300000, // Time-to-live in ms (default: 5 minutes)
+  },
 });
 
 // Get cache statistics
@@ -107,28 +112,27 @@ const stats = client.getCacheStats(); // Returns: { size: number }
 client.clearCache();
 ```
 
-
 ## TypeScript Types
 
 The client provides built-in type definitions for all API operations:
 
 ```typescript
-import { 
+import {
   ApliiqConfig,
   Product,
   ApliiqOrder,
-  ApliiqOrderResponse
-} from 'apliiq-client';
+  ApliiqOrderResponse,
+} from "apliiq-client";
 
 // Configuration type
 const config: ApliiqConfig = {
-  appId: 'your-app-id',
-  sharedSecret: 'your-shared-secret',
+  appId: "your-app-id",
+  sharedSecret: "your-shared-secret",
   cache: {
     enabled: true,
     max: 1000,
-    ttl: 300000
-  }
+    ttl: 300000,
+  },
 };
 
 // Product type
@@ -147,13 +151,15 @@ const order: ApliiqOrder = {
   number: 1006,
   name: "#1006",
   order_number: 1006,
-  line_items: [{
-    id: "1511138222",
-    title: "cotton heritage polly pocket",
-    quantity: 1,
-    price: "45.50",
-    sku: "APQ-1998244S7A1"
-  }],
+  line_items: [
+    {
+      id: "1511138222",
+      title: "cotton heritage polly pocket",
+      quantity: 1,
+      price: "45.50",
+      sku: "APQ-1998244S7A1",
+    },
+  ],
   shipping_address: {
     first_name: "john",
     last_name: "smith",
@@ -163,8 +169,8 @@ const order: ApliiqOrder = {
     province: "California",
     country: "United States",
     country_code: "US",
-    province_code: "CA"
-  }
+    province_code: "CA",
+  },
 };
 
 // Order response type
@@ -174,7 +180,6 @@ const response: ApliiqOrderResponse = await client.createOrder(order);
 
 All types include full TypeScript intellisense support and runtime validation through Zod schemas.
 
-
 ## Error Handling
 
 ```typescript
@@ -183,12 +188,13 @@ try {
 } catch (error) {
   if (error instanceof ApliiqError) {
     console.error(`API Error (${error.statusCode}): ${error.message}`);
-    if (error.details) console.error('Details:', error.details);
+    if (error.details) console.error("Details:", error.details);
   }
 }
 ```
 
 ### Common Error Scenarios
+
 - Validation Errors: Zod schema validation failures
 - 401 Unauthorized: Invalid HMAC signature
 - 202 Accepted: Order received but not yet processed
@@ -196,6 +202,7 @@ try {
 ## Response Examples
 
 ### Product Response
+
 ```json
 {
   "Id": 162,
@@ -220,6 +227,7 @@ try {
 ```
 
 ### Order Response
+
 ```json
 {
   "id": 567890
@@ -227,6 +235,7 @@ try {
 ```
 
 ## Rate Limiting
+
 The API currently doesn't specify rate limits. It's recommended to implement retry logic for production use.
 
 ## Development
@@ -243,7 +252,9 @@ npm test
 ```
 
 ## License
+
 MIT - See [LICENSE](LICENSE)
 
 ## Documentation
+
 For complete API documentation, visit [Apliiq API Docs](https://help.apliiq.com/portal/en/kb/help/api)
