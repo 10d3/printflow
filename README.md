@@ -1,35 +1,53 @@
-# Apliiq API Client
+---
+name: PrintFlow SDK
+route: /
+---
 
-TypeScript client for Apliiq's Print-on-Demand API
+# @10d3/printflow
 
-[![npm version](https://img.shields.io/npm/v/apliiq-client.svg)](https://www.npmjs.com/package/apliiq-client)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![npm version](https://img.shields.io/npm/v/@10d3/printflow.svg?style=flat-square)](https://www.npmjs.com/package/@10d3/printflow)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-brightgreen)](https://github.com/10d3/printflow)
+
+Modern TypeScript SDK for integrating with Apliiq's Print-on-Demand API. Handle product catalog management, order processing, and inventory tracking with full type safety and caching support.
 
 ## Features
 
-- 🛡️ HMAC Authentication
-- 🧩 TypeScript-first implementation
-- ✅ Zod schema validation
-- 📦 Product & Order management
-- 🚨 Comprehensive error handling
-- ⚡ Axios-based HTTP client
+- **Full TypeScript Support** - Built with TypeScript 5 and Zod validation
+- **Intelligent Caching** - LRU caching with customizable TTL strategies
+- **Security** - HMAC authentication for API requests
+- **Error Handling** - Structured error classes with context details
+- **ESM Support** - Modern module system for better tree-shaking
 
 ## Installation
 
 ```bash
-npm install apliiq-client
+npm install @10d3/printflow
+# or
+bun add @10d3/printflow
 ```
 
 ## Configuration
 
+Create a client instance with your Apliiq credentials:
+
 ```typescript
-import { ApliiqClient } from "apliiq-client";
+import { ApliiqClient } from '@10d3/printflow';
 
 const client = new ApliiqClient({
-  appId: "your-app-id",
-  sharedSecret: "your-shared-secret",
-  endpoint: "https://api.apliiq.com/v1", // Optional
-  timeout: 15000, // Optional
+  appId: 'YOUR_APP_ID',
+  sharedSecret: 'YOUR_SHARED_SECRET',
+  endpoint: 'https://api.apliiq.com/v1', // Optional
+  timeout: 15000, // 15 seconds
+  cache: {
+    enabled: true,
+    max: 1000,
+    ttl: 300000, // 5 minutes
+    products: {
+      ttl: 60000, // 1 minute per product
+      batchTTL: 180000 // 3 minutes for product lists
+    }
+  }
 });
 ```
 
@@ -37,19 +55,31 @@ const client = new ApliiqClient({
 
 ### Product API
 
-#### Get All Products
+<Tabs> <Tab label="Get All Products">
 
 ```typescript
-const products = await client.getProducts();
-console.log("Available products:", products);
+async function listProducts() {
+  try {
+    const products = await client.getProducts();
+    console.log('Available products:', products);
+  } catch (error) {
+    console.error('Failed to fetch products:', error.message);
+  }
+}
 ```
-
-#### Get Single Product
+</Tab> <Tab label="Get Single Product">
 
 ```typescript
-const product = await client.getProduct(162);
-console.log("Product details:", product);
+async function listProducts() {
+  try {
+    const products = await client.getProducts();
+    console.log('Available products:', products);
+  } catch (error) {
+    console.error('Failed to fetch products:', error.message);
+  }
+}
 ```
+</Tab></Tabs>
 
 ### Order API
 
@@ -108,8 +138,14 @@ const client = new ApliiqClient({
 // Get cache statistics
 const stats = client.getCacheStats(); // Returns: { size: number }
 
-// Clear cache
+// Clear entire cache
 client.clearCache();
+
+// Clear specific product
+client.clearProductCache(123);
+
+// Clear all products
+client.clearProductsCache();
 ```
 
 ## TypeScript Types
