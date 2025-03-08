@@ -306,7 +306,7 @@ bun run build
 
 ## License
 
-MIT - See [LICENSE](LICENSE)
+MIT - See [LICENSE](LICENSE) © [10d3](https://github.com/10d3)
 
 ## Documentation
 
