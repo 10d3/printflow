@@ -1,16 +1,23 @@
 import { z } from 'zod';
 
+export interface CacheConfig {
+  enabled: boolean;
+  max?: number;
+  ttl?: number;
+  staleWhileRevalidate?: boolean;
+  products?: {
+    ttl?: number;
+    batchTTL?: number;
+  };
+}
+
 // Configuration Types ======================================
 export interface ApliiqConfig {
   appId: string;
   sharedSecret: string;
   endpoint?: string;
   timeout?: number;
-  cache?: {
-    max?: number;
-    ttl?: number;
-    enabled?: boolean;
-  };
+  cache?: CacheConfig; // Changed from the original basic cache type
 }
 
 // Product API Types =========================================
@@ -117,6 +124,7 @@ const ShippingAddressSchema = z.object({
 });
 
 export const ApliiqOrderSchema = z.object({
+  id: z.number(),
   number: z.number().positive(),
   name: z.string(),
   order_number: z.number().positive(),
