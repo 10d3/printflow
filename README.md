@@ -1,8 +1,3 @@
----
-name: PrintFlow SDK
-route: /
----
-
 # @10d3/printflow
 
 [![npm version](https://img.shields.io/npm/v/@10d3/printflow.svg?style=flat-square)](https://www.npmjs.com/package/@10d3/printflow)
@@ -286,6 +281,28 @@ npm run build
 # Run tests
 npm test
 ```
+
+## Contribution
+
+- Clone repository
+
+```bash
+git clone https://github.com/10d3/printflow.git
+```
+
+- Install dep
+
+```bash
+bun install
+```
+
+- Build the project
+
+```bash
+bun run build
+```
+
+- Submit PR with tests
 
 ## License
 
